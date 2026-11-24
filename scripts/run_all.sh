@@ -4,7 +4,9 @@
 # Seeds 0,1,2 for the 1% / 10% label budgets (high variance), seed 0 for 100%.
 set -euo pipefail
 cd "$(dirname "$0")/../src"
-PY=${PY:-../.venv/bin/python}
+if [[ -z ${PY:-} ]]; then  # project venv if present, else the active python
+  if [[ -x ../.venv/bin/python ]]; then PY=../.venv/bin/python; else PY=python; fi
+fi
 STAGE=${1:-all}
 
 runs_for() {  # $1=init $2=protocol
